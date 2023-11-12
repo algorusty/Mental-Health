@@ -1,4 +1,4 @@
-# Codebase README
+# README
 
 This codebase contains a collection of markdown files that provide information and strategies for managing various mental health conditions, including depression, anxiety, stress, and autism. It also includes resources on emotion regulation and understanding different emotional states.
 
