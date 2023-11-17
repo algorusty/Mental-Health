@@ -2,9 +2,11 @@
     "builds": [
       {
         "src": "./package.json",
-        "use": "@vercel/node",
-        "config": { "outputDirectory": "./public" }
+        "use": "@vercel/static"
       }
+    ],
+    "routes": [
+      { "src": "/(.*)", "dest": "/public/$1" }
     ]
   }
   
