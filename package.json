@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "marked": "^10.0.0",
+    "openai": "^4.19.0"
+  },
+  "name": "mental-health",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "bun index.ts",
+    "vercel-build": "bun index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
