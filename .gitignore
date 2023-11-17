@@ -11,5 +11,5 @@ dist/
 *.log
 
 # Ignore the generated website
-index.html
+# index.html
 .vercel
