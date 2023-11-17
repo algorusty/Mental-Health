@@ -31,8 +31,35 @@ const generateHTMLContent = (filePaths: string[]): { content: string, files: str
     return { content, files: filePaths };
 };
 
+const generateNavbar = (filePaths: string[]): string => {
+    const folderStructure: { [key: string]: string[] } = {};
+
+    filePaths.forEach(filePath => {
+        const parts = filePath.split('/');
+        const fileName = parts.pop();
+        const folderPath = parts.join('/');
+
+        if (!folderStructure[folderPath]) {
+            folderStructure[folderPath] = [];
+        }
+        folderStructure[folderPath].push(fileName as string);
+    });
+
+    let navbar = '<ul id="navbar">';
+    Object.keys(folderStructure).forEach(folder => {
+        navbar += `<li class="folder"><span class="folder-name">${folder}</span><ul class="dropdown">`;
+        folderStructure[folder].forEach(file => {
+            navbar += `<li><a href="#${path.basename(file, '.md')}">${file}</a></li>`;
+        });
+        navbar += '</ul></li>';
+    });
+    navbar += '</ul>';
+
+    return navbar;
+};
+
 const buildHTMLPage = (htmlContent: string, files: string[]): string => {
-    const navbar = files.map(file => `<li><a href="#${path.basename(file, '.md')}">${path.basename(file)}</a></li>`).join('');
+    const navbar = generateNavbar(files);
     return `
 <!DOCTYPE html>
 <html>
@@ -42,22 +69,35 @@ const buildHTMLPage = (htmlContent: string, files: string[]): string => {
     <style>
         body { font-family: Arial, sans-serif; display: flex; }
         #navbar { list-style-type: none; padding: 0; width: 200px; background-color: #f0f0f0; }
-        #navbar li a { display: block; padding: 8px; text-decoration: none; }
+        #navbar .folder-name { cursor: pointer; display: block; padding: 8px; }
+        #navbar .folder-name:before { content: '▸'; display: inline-block; margin-right: 5px; }
+        #navbar .dropdown { display: none; list-style-type: none; padding: 0; margin: 0; }
+        #navbar li.folder.open .dropdown { display: block; }
+        #navbar li.folder.open .folder-name:before { content: '▾'; }
         #content { flex-grow: 1; padding: 20px; }
         .content { display: none; }
         .content.active { display: block; }
     </style>
 </head>
 <body>
-    <ul id="navbar">${navbar}</ul>
+    ${navbar}
     <div id="content">${htmlContent}</div>
     <script>
+        document.querySelectorAll('#navbar .folder-name').forEach(element => {
+            element.addEventListener('click', function() {
+                this.parentElement.classList.toggle('open');
+            });
+        });
         document.getElementById('navbar').addEventListener('click', function(e) {
-            if (e.target.tagName === 'A') {
+            if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
                 var active = document.querySelector('.content.active');
                 if (active) active.classList.remove('active');
-                var content = document.getElementById(e.target.getAttribute('href').substring(1));
-                if (content) content.classList.add('active');
+                var contentId = e.target.getAttribute('href').substring(1);
+                if (contentId) {
+                    var content = document.getElementById(contentId);
+                    if (content) content.classList.add('active');
+                }
+                e.preventDefault();
             }
         });
     </script>
@@ -71,5 +111,11 @@ const markdownFiles = scanDirectoryStructure(rootFolder);
 const { content, files } = generateHTMLContent(markdownFiles);
 const htmlPage = buildHTMLPage(content, files);
 
-fs.writeFileSync('./public/index.html', htmlPage);
+// Ensure the output directory exists
+const outputDir = './public';
+if (!fs.existsSync(outputDir)){
+    fs.mkdirSync(outputDir, { recursive: true });
+}
+
+fs.writeFileSync(path.join(outputDir, 'index.html'), htmlPage);
 console.log('Website generated successfully!');
