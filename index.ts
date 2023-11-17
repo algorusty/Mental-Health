@@ -42,14 +42,18 @@ const generateNavbar = (filePaths: string[]): string => {
         if (!folderStructure[folderPath]) {
             folderStructure[folderPath] = [];
         }
-        folderStructure[folderPath].push(fileName as string);
+        if (fileName) {
+            folderStructure[folderPath].push(fileName);
+        }
     });
 
     let navbar = '<ul id="navbar">';
     Object.keys(folderStructure).forEach(folder => {
         navbar += `<li class="folder"><span class="folder-name">${folder}</span><ul class="dropdown">`;
         folderStructure[folder].forEach(file => {
-            navbar += `<li><a href="#${path.basename(file, '.md')}">${file}</a></li>`;
+            // Remove the ".md" extension from the display name
+            const displayName = file.replace('.md', '');
+            navbar += `<li><a href="#${path.basename(file, '.md')}">${displayName}</a></li>`;
         });
         navbar += '</ul></li>';
     });
@@ -57,6 +61,7 @@ const generateNavbar = (filePaths: string[]): string => {
 
     return navbar;
 };
+
 
 const buildHTMLPage = (htmlContent: string, files: string[]): string => {
     const navbar = generateNavbar(files);
