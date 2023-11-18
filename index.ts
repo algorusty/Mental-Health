@@ -1,73 +1,64 @@
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as Marked from 'marked';
+import Handlebars from 'handlebars';
 
-const scanDirectoryStructure = (dir: string, prefix: string = ''): string[] => {
-    let fileList: string[] = [];
-    const directoryContents = fs.readdirSync(dir, { withFileTypes: true });
-    directoryContents.forEach(dirent => {
+interface FileStructure {
+    [folder: string]: string[];
+}
+
+const rootFolder = path.resolve('./The Mind');
+const outputDir = './public';
+
+const scanDirectoryStructure = async (dir: string, prefix: string = ''): Promise<string[]> => {
+    const directoryContents = await fs.readdir(dir, { withFileTypes: true });
+    const files = await Promise.all(directoryContents.map(async dirent => {
         const fullPath = path.join(dir, dirent.name);
-        if (dirent.isDirectory()) {
-            fileList = fileList.concat(scanDirectoryStructure(fullPath, prefix + dirent.name + '/'));
-        } else if (path.extname(dirent.name) === '.md') {
-            fileList.push(prefix + dirent.name);
-        }
-    });
-    // console.log(fileList);
-    return fileList;
+        return dirent.isDirectory() ?
+            await scanDirectoryStructure(fullPath, prefix + dirent.name + '/') :
+            (path.extname(dirent.name) === '.md' ? [prefix + dirent.name] : []);
+    }));
+    return files.flat();
 };
 
-const generateHTMLContent = (filePaths: string[]): { content: string, files: string[] } => {
-    let content = '';
-    filePaths.forEach(filePath => {
+const generateHTMLContent = async (filePaths: string[]): Promise<{ content: string, files: string[] }> => {
+    const content = await filePaths.reduce(async (htmlPromise, filePath) => {
+        const html = await htmlPromise;
         const absolutePath = path.join(rootFolder, filePath);
-        if (fs.existsSync(absolutePath)) {
-            const markdown = fs.readFileSync(absolutePath, 'utf8');
-            content += `<div id="${path.basename(filePath, '.md')}" class="content">${Marked.parse(markdown)}</div>`;
-        } else {
+        try {
+            const markdown = await fs.readFile(absolutePath, 'utf8');
+            return html + `<div id="${path.basename(filePath, '.md')}" class="content">${Marked.parse(markdown)}</div>`;
+        } catch {
             console.log(`File not found: ${absolutePath}`);
+            return html;
         }
-    });
+    }, Promise.resolve(''));
+
     return { content, files: filePaths };
 };
 
 const generateNavbar = (filePaths: string[]): string => {
-    const folderStructure: { [key: string]: string[] } = {};
-
-    filePaths.forEach(filePath => {
+    const folderStructure = filePaths.reduce<FileStructure>((structure, filePath) => {
         const parts = filePath.split('/');
-        const fileName = parts.pop();
+        const fileName = parts.pop()!;
         const folderPath = parts.join('/');
 
-        if (!folderStructure[folderPath]) {
-            folderStructure[folderPath] = [];
-        }
-        if (fileName) {
-            folderStructure[folderPath].push(fileName);
-        }
-    });
+        (structure[folderPath] = structure[folderPath] || []).push(fileName);
+        return structure;
+    }, {});
 
-    let navbar = '<ul id="navbar" class="markdown-navbar">';
-    Object.keys(folderStructure).forEach(folder => {
+    return Object.entries(folderStructure).reduce((navbar, [folder, files]) => {
         const openClass = folder.includes('README') ? ' open' : '';
-        navbar += `<li class="folder${openClass}"><span class="folder-name">${folder}</span><ul class="dropdown">`;
-        folderStructure[folder].forEach(file => {
-            const displayName = file.replace('.md', '');
-            const activeClass = displayName === 'README' ? ' active' : '';
-            navbar += `<li class="nav-item${activeClass}"><a href="#${path.basename(file, '.md')}">${displayName}</a></li>`;
-        });
-        navbar += '</ul></li>';
-    });
-    navbar += '</ul>';
-
-    return navbar;
+        const fileLinks = files.map(file => 
+            `<li class="nav-item${file.includes('README') ? ' active' : ''}"><a href="#${path.basename(file, '.md')}">${file.replace('.md', '')}</a></li>`
+        ).join('');
+        return `${navbar}<li class="folder${openClass}"><span class="folder-name">${folder}</span><ul class="dropdown">${fileLinks}</ul></li>`;
+    }, '<ul id="navbar" class="markdown-navbar">') + '</ul>';
 };
-
-
 
 const buildHTMLPage = (htmlContent: string, files: string[]): string => {
     const navbar = generateNavbar(files);
-    return `
+    const template = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -133,8 +124,8 @@ const buildHTMLPage = (htmlContent: string, files: string[]): string => {
             </style>
         </head>
         <body>
-            ${navbar}
-            <div id="content" class="markdown-body">${htmlContent}</div>
+            {{{navbar}}}
+            <div id="content" class="markdown-body">{{{htmlContent}}}</div>
             <script>
                 document.querySelectorAll('#navbar .folder-name').forEach(element => {
                     element.addEventListener('click', function() {
@@ -157,23 +148,27 @@ const buildHTMLPage = (htmlContent: string, files: string[]): string => {
                     var readmeLink = document.querySelector('a[href="#README"]');
                     if (readmeLink) readmeLink.click();
                 };
-            </script>
-        </body>
-        </html>
-    `.trim();
-};
-
-
-const rootFolder = path.resolve('./The Mind'); // Set your root folder
-const markdownFiles = scanDirectoryStructure(rootFolder);
-const { content, files } = generateHTMLContent(markdownFiles);
-const htmlPage = buildHTMLPage(content, files);
-
-// Ensure the output directory exists
-const outputDir = './public';
-if (!fs.existsSync(outputDir)){
-    fs.mkdirSync(outputDir, { recursive: true });
-}
-
-fs.writeFileSync(path.join(outputDir, 'index.html'), htmlPage);
-console.log('Website generated successfully!');
+                </script>
+                </body>
+                </html>
+            `;
+        
+            const compiledTemplate = Handlebars.compile(template);
+            return compiledTemplate({ navbar, htmlContent }).trim();
+        };
+        
+        const executeBuildProcess = async () => {
+            try {
+                const markdownFiles = await scanDirectoryStructure(rootFolder);
+                const { content } = await generateHTMLContent(markdownFiles);
+                const htmlPage = buildHTMLPage(content, markdownFiles);
+        
+                await fs.mkdir(outputDir, { recursive: true });
+                await fs.writeFile(path.join(outputDir, 'index.html'), htmlPage);
+                console.log('Website generated successfully!');
+            } catch (error) {
+                console.error('Error during the build process:', error);
+            }
+        };
+        
+        executeBuildProcess();

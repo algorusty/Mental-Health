@@ -22,69 +22,67 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = __importStar(require("fs"));
+const fs = __importStar(require("fs/promises"));
 const path = __importStar(require("path"));
 const Marked = __importStar(require("marked"));
-const scanDirectoryStructure = (dir, prefix = '') => {
-    let fileList = [];
-    const directoryContents = fs.readdirSync(dir, { withFileTypes: true });
-    directoryContents.forEach(dirent => {
+const handlebars_1 = __importDefault(require("handlebars"));
+const rootFolder = path.resolve('./The Mind');
+const outputDir = './public';
+const scanDirectoryStructure = (dir, prefix = '') => __awaiter(void 0, void 0, void 0, function* () {
+    const directoryContents = yield fs.readdir(dir, { withFileTypes: true });
+    const files = yield Promise.all(directoryContents.map((dirent) => __awaiter(void 0, void 0, void 0, function* () {
         const fullPath = path.join(dir, dirent.name);
-        if (dirent.isDirectory()) {
-            fileList = fileList.concat(scanDirectoryStructure(fullPath, prefix + dirent.name + '/'));
-        }
-        else if (path.extname(dirent.name) === '.md') {
-            fileList.push(prefix + dirent.name);
-        }
-    });
-    // console.log(fileList);
-    return fileList;
-};
-const generateHTMLContent = (filePaths) => {
-    let content = '';
-    filePaths.forEach(filePath => {
+        return dirent.isDirectory() ?
+            yield scanDirectoryStructure(fullPath, prefix + dirent.name + '/') :
+            (path.extname(dirent.name) === '.md' ? [prefix + dirent.name] : []);
+    })));
+    return files.flat();
+});
+const generateHTMLContent = (filePaths) => __awaiter(void 0, void 0, void 0, function* () {
+    const content = yield filePaths.reduce((htmlPromise, filePath) => __awaiter(void 0, void 0, void 0, function* () {
+        const html = yield htmlPromise;
         const absolutePath = path.join(rootFolder, filePath);
-        if (fs.existsSync(absolutePath)) {
-            const markdown = fs.readFileSync(absolutePath, 'utf8');
-            content += `<div id="${path.basename(filePath, '.md')}" class="content">${Marked.parse(markdown)}</div>`;
+        try {
+            const markdown = yield fs.readFile(absolutePath, 'utf8');
+            return html + `<div id="${path.basename(filePath, '.md')}" class="content">${Marked.parse(markdown)}</div>`;
         }
-        else {
+        catch (_a) {
             console.log(`File not found: ${absolutePath}`);
+            return html;
         }
-    });
+    }), Promise.resolve(''));
     return { content, files: filePaths };
-};
+});
 const generateNavbar = (filePaths) => {
-    const folderStructure = {};
-    filePaths.forEach(filePath => {
+    const folderStructure = filePaths.reduce((structure, filePath) => {
         const parts = filePath.split('/');
         const fileName = parts.pop();
         const folderPath = parts.join('/');
-        if (!folderStructure[folderPath]) {
-            folderStructure[folderPath] = [];
-        }
-        if (fileName) {
-            folderStructure[folderPath].push(fileName);
-        }
-    });
-    let navbar = '<ul id="navbar" class="markdown-navbar">';
-    Object.keys(folderStructure).forEach(folder => {
+        (structure[folderPath] = structure[folderPath] || []).push(fileName);
+        return structure;
+    }, {});
+    return Object.entries(folderStructure).reduce((navbar, [folder, files]) => {
         const openClass = folder.includes('README') ? ' open' : '';
-        navbar += `<li class="folder${openClass}"><span class="folder-name">${folder}</span><ul class="dropdown">`;
-        folderStructure[folder].forEach(file => {
-            const displayName = file.replace('.md', '');
-            const activeClass = displayName === 'README' ? ' active' : '';
-            navbar += `<li class="nav-item${activeClass}"><a href="#${path.basename(file, '.md')}">${displayName}</a></li>`;
-        });
-        navbar += '</ul></li>';
-    });
-    navbar += '</ul>';
-    return navbar;
+        const fileLinks = files.map(file => `<li class="nav-item${file.includes('README') ? ' active' : ''}"><a href="#${path.basename(file, '.md')}">${file.replace('.md', '')}</a></li>`).join('');
+        return `${navbar}<li class="folder${openClass}"><span class="folder-name">${folder}</span><ul class="dropdown">${fileLinks}</ul></li>`;
+    }, '<ul id="navbar" class="markdown-navbar">') + '</ul>';
 };
 const buildHTMLPage = (htmlContent, files) => {
     const navbar = generateNavbar(files);
-    return `
+    const template = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -150,8 +148,8 @@ const buildHTMLPage = (htmlContent, files) => {
             </style>
         </head>
         <body>
-            ${navbar}
-            <div id="content" class="markdown-body">${htmlContent}</div>
+            {{{navbar}}}
+            <div id="content" class="markdown-body">{{{htmlContent}}}</div>
             <script>
                 document.querySelectorAll('#navbar .folder-name').forEach(element => {
                     element.addEventListener('click', function() {
@@ -174,19 +172,24 @@ const buildHTMLPage = (htmlContent, files) => {
                     var readmeLink = document.querySelector('a[href="#README"]');
                     if (readmeLink) readmeLink.click();
                 };
-            </script>
-        </body>
-        </html>
-    `.trim();
+                </script>
+                </body>
+                </html>
+            `;
+    const compiledTemplate = handlebars_1.default.compile(template);
+    return compiledTemplate({ navbar, htmlContent }).trim();
 };
-const rootFolder = path.resolve('./The Mind'); // Set your root folder
-const markdownFiles = scanDirectoryStructure(rootFolder);
-const { content, files } = generateHTMLContent(markdownFiles);
-const htmlPage = buildHTMLPage(content, files);
-// Ensure the output directory exists
-const outputDir = './public';
-if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-}
-fs.writeFileSync(path.join(outputDir, 'index.html'), htmlPage);
-console.log('Website generated successfully!');
+const executeBuildProcess = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const markdownFiles = yield scanDirectoryStructure(rootFolder);
+        const { content } = yield generateHTMLContent(markdownFiles);
+        const htmlPage = buildHTMLPage(content, markdownFiles);
+        yield fs.mkdir(outputDir, { recursive: true });
+        yield fs.writeFile(path.join(outputDir, 'index.html'), htmlPage);
+        console.log('Website generated successfully!');
+    }
+    catch (error) {
+        console.error('Error during the build process:', error);
+    }
+});
+executeBuildProcess();
