@@ -5,7 +5,7 @@ node_modules/
 *.personal.md
 
 # Ignore TypeScript build output
-dist/
+# dist/
 
 # Ignore any log files
 *.log
