@@ -38,7 +38,7 @@ const scanDirectoryStructure = (dir, prefix = '') => {
             fileList.push(prefix + dirent.name);
         }
     });
-    console.log(fileList);
+    // console.log(fileList);
     return fileList;
 };
 const generateHTMLContent = (filePaths) => {
@@ -70,7 +70,8 @@ const generateNavbar = (filePaths) => {
     });
     let navbar = '<ul id="navbar" class="markdown-navbar">';
     Object.keys(folderStructure).forEach(folder => {
-        navbar += `<li class="folder"><span class="folder-name">${folder}</span><ul class="dropdown">`;
+        const openClass = folder.includes('README') ? ' open' : '';
+        navbar += `<li class="folder${openClass}"><span class="folder-name">${folder}</span><ul class="dropdown">`;
         folderStructure[folder].forEach(file => {
             const displayName = file.replace('.md', '');
             const activeClass = displayName === 'README' ? ' active' : '';
@@ -169,6 +170,10 @@ const buildHTMLPage = (htmlContent, files) => {
                         e.preventDefault();
                     }
                 });
+                window.onload = function() {
+                    var readmeLink = document.querySelector('a[href="#README"]');
+                    if (readmeLink) readmeLink.click();
+                };
             </script>
         </body>
         </html>

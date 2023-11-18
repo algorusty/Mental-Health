@@ -6,7 +6,7 @@
     "name": "themind.exposed",
     "type": "commonjs",
     "scripts": {
-        "build": "tsc && node dist/index.js",
+        "build": "tsc",
         "start": "node dist/index.js",
         "postbuild": "node dist/index.js"
       },
