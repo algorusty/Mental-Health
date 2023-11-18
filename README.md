@@ -1,7 +1,9 @@
 # The Mind - A Comprehensive Guide to Mental Health
 
 [wesleysoto.dev](https://wesleysoto.dev/)
+
 [Github: algorusty](https://github.com/algorusty)
+
 [LinkedIn](https://www.linkedin.com/in/wesley-soto-b9a2217b/)
 
 ## Overview
