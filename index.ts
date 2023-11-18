@@ -89,7 +89,7 @@ const buildHTMLPage = (htmlContent: string, files: string[]): string => {
                     border-right: 1px solid #e1e4e8;
                     padding: 0.5em;
                     margin: 0;
-                    width: 200px;
+                    width: 300px;
                 }
             
                 .markdown-navbar ul {
