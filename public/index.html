@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>The Mind</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
-    <style>
-        body { font-family: Arial, sans-serif; display: flex; }
-        #navbar { list-style-type: none; padding: 0; width: 200px; background-color: #f0f0f0; }
-        #navbar .folder-name { cursor: pointer; display: block; padding: 8px; }
-        #navbar .folder-name:before { content: '▸'; display: inline-block; margin-right: 5px; }
-        #navbar .dropdown { display: none; list-style-type: none; padding: 0; margin: 0; }
-        #navbar li.folder.open .dropdown { display: block; }
-        #navbar li.folder.open .folder-name:before { content: '▾'; }
-        #content { flex-grow: 1; padding: 20px; }
-        .content { display: none; }
-        .content.active { display: block; }
-    </style>
-</head>
-<body>
-    <ul id="navbar"><li class="folder"><span class="folder-name">Emotions</span><ul class="dropdown"><li><a href="#Managing Emotions">Managing Emotions</a></li><li><a href="#Signs and Behavior">Signs and Behavior</a></li><li><a href="#Regulation">Regulation</a></li></ul></li><li class="folder"><span class="folder-name">Stress</span><ul class="dropdown"><li><a href="#Stress and Anxiety">Stress and Anxiety</a></li><li><a href="#Symptoms">Symptoms</a></li></ul></li><li class="folder"><span class="folder-name">Depression</span><ul class="dropdown"><li><a href="#core beliefs">core beliefs</a></li><li><a href="#Vicious Cycle">Vicious Cycle</a></li><li><a href="#Untwist your thinking">Untwist your thinking</a></li><li><a href="#Unhelpful thinking styles">Unhelpful thinking styles</a></li><li><a href="#Support">Support</a></li><li><a href="#What is depression?">What is depression?</a></li><li><a href="#Cognitive strategies">Cognitive strategies</a></li><li><a href="#Coping skills">Coping skills</a></li></ul></li><li class="folder"><span class="folder-name">Autism</span><ul class="dropdown"><li><a href="#What is autism?">What is autism?</a></li><li><a href="#Intro">Intro</a></li><li><a href="#Living with autism">Living with autism</a></li><li><a href="#Therapies">Therapies</a></li><li><a href="#Employment, advocacy, research">Employment, advocacy, research</a></li></ul></li><li class="folder"><span class="folder-name">Anxiety</span><ul class="dropdown"><li><a href="#What is anxiety?">What is anxiety?</a></li><li><a href="#Vicious cycle">Vicious cycle</a></li><li><a href="#Support">Support</a></li><li><a href="#Analysing you thinking">Analysing you thinking</a></li><li><a href="#Safety behaviours">Safety behaviours</a></li><li><a href="#Worry">Worry</a></li><li><a href="#Accepting Uncertainty">Accepting Uncertainty</a></li><li><a href="#index">index</a></li></ul></li></ul>
-    <div id="content"><div id="Managing Emotions" class="content"><h1>Emotion Regulation: Managing Emotions</h1>
+        <html>
+        <head>
+            <title>The Mind</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.4.0/github-markdown.min.css" integrity="sha512-30lMQ13MJJk66BfdlnvVnKmP05V7Qt1g6sHyYigDgV8i9M2ENAsXk1U4dVvKUYB6pqb2bVhoxhZsYK08hQpS+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <style>
+                body { font-family: Arial, sans-serif; display: flex; }
+                #navbar { list-style-type: none; padding: 0; width: 200px; background-color: #f0f0f0; }
+                #navbar .folder-name { cursor: pointer; display: block; padding: 8px; }
+                #navbar .folder-name:before { content: '▸'; display: inline-block; margin-right: 5px; }
+                #navbar .dropdown { display: none; list-style-type: none; padding: 0; margin: 0; }
+                #navbar li.folder.open .dropdown { display: block; }
+                #navbar li.folder.open .folder-name:before { content: '▾'; }
+                #content { flex-grow: 1; padding: 20px; }
+                .content { display: none; }
+                .content.active { display: block; }
+                // .markdown-body { max-width: 800px; margin: 0 auto; padding: 45px; }
+                .markdown-navbar {
+                    font-family: Arial, sans-serif;
+                    background-color: #f6f8fa;
+                    border-right: 1px solid #e1e4e8;
+                    padding: 0.5em;
+                    margin: 0;
+                    width: 200px;
+                }
+            
+                .markdown-navbar ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                }
+            
+                .markdown-navbar li a {
+                    color: #0366d6;
+                    text-decoration: none;
+                    padding: 0.5em;
+                    display: block;
+                }
+            
+                .markdown-navbar li a:hover {
+                    text-decoration: underline;
+                }
+            
+                .folder-name {
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+            
+                .folder-name:before {
+                    content: '▸';
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+            
+                .folder.open .dropdown {
+                    display: block;
+                }
+            
+                .folder.open .folder-name:before {
+                    content: '▾';
+                }
+            </style>
+        </head>
+        <body>
+            <ul id="navbar" class="markdown-navbar"><li class="folder"><span class="folder-name">Emotions</span><ul class="dropdown"><li><a href="#Managing Emotions">Managing Emotions</a></li><li><a href="#Signs and Behavior">Signs and Behavior</a></li><li><a href="#Regulation">Regulation</a></li></ul></li><li class="folder"><span class="folder-name">Stress</span><ul class="dropdown"><li><a href="#Stress and Anxiety">Stress and Anxiety</a></li><li><a href="#Symptoms">Symptoms</a></li></ul></li><li class="folder"><span class="folder-name">Depression</span><ul class="dropdown"><li><a href="#core beliefs">core beliefs</a></li><li><a href="#Vicious Cycle">Vicious Cycle</a></li><li><a href="#Untwist your thinking">Untwist your thinking</a></li><li><a href="#Unhelpful thinking styles">Unhelpful thinking styles</a></li><li><a href="#Support">Support</a></li><li><a href="#What is depression?">What is depression?</a></li><li><a href="#Cognitive strategies">Cognitive strategies</a></li><li><a href="#Coping skills">Coping skills</a></li></ul></li><li class="folder"><span class="folder-name">Autism</span><ul class="dropdown"><li><a href="#What is autism?">What is autism?</a></li><li><a href="#Intro">Intro</a></li><li><a href="#Living with autism">Living with autism</a></li><li><a href="#Therapies">Therapies</a></li><li><a href="#Employment, advocacy, research">Employment, advocacy, research</a></li></ul></li><li class="folder"><span class="folder-name">Anxiety</span><ul class="dropdown"><li><a href="#What is anxiety?">What is anxiety?</a></li><li><a href="#Vicious cycle">Vicious cycle</a></li><li><a href="#Support">Support</a></li><li><a href="#Analysing you thinking">Analysing you thinking</a></li><li><a href="#Safety behaviours">Safety behaviours</a></li><li><a href="#Worry">Worry</a></li><li><a href="#Accepting Uncertainty">Accepting Uncertainty</a></li><li><a href="#index">index</a></li></ul></li><li class="folder"><span class="folder-name">Trauma</span><ul class="dropdown"><li><a href="#Trauma Narrative">Trauma Narrative</a></li><li><a href="#Fundamentals">Fundamentals</a></li><li><a href="#Management">Management</a></li><li><a href="#Social Dynamics">Social Dynamics</a></li><li><a href="#Therapeutic Approaches">Therapeutic Approaches</a></li><li><a href="#Cognition and Management">Cognition and Management</a></li><li><a href="#Behavioral Activation">Behavioral Activation</a></li><li><a href="#Building Resilience">Building Resilience</a></li><li><a href="#Community and Support">Community and Support</a></li><li><a href="#Holistic Approach">Holistic Approach</a></li><li><a href="#Indicators">Indicators</a></li><li><a href="#Exercises and Practice">Exercises and Practice</a></li></ul></li></ul>
+            <div id="content" class="markdown-body"><div id="Managing Emotions" class="content"><h1>Emotion Regulation: Managing Emotions</h1>
 <p>Understanding and managing emotions is crucial for mental health. Emotional dysregulation can contribute to anxiety, depression, personality disorders, psychosis, and PTSD. Learning to regulate emotions is possible at any stage in life.</p>
 <h2>Understanding Emotions</h2>
 <ul>
@@ -1367,25 +1412,150 @@
 <li><a href="Anxiety/Accepting%20Uncertainty.md">Accepting Uncertainty.md</a>: Discusses the issue of uncertainty in anxiety and provides strategies to accept and manage it.</li>
 <li><a href="Anxiety/Analysing%20you%20thinking.md">Analysing you thinking.md</a>: Provides strategies to analyze and manage anxiety-inducing thoughts.</li>
 </ol>
-</div></div>
-    <script>
-        document.querySelectorAll('#navbar .folder-name').forEach(element => {
-            element.addEventListener('click', function() {
-                this.parentElement.classList.toggle('open');
-            });
-        });
-        document.getElementById('navbar').addEventListener('click', function(e) {
-            if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
-                var active = document.querySelector('.content.active');
-                if (active) active.classList.remove('active');
-                var contentId = e.target.getAttribute('href').substring(1);
-                if (contentId) {
-                    var content = document.getElementById(contentId);
-                    if (content) content.classList.add('active');
-                }
-                e.preventDefault();
-            }
-        });
-    </script>
-</body>
-</html>
+</div><div id="Trauma Narrative" class="content"><h1>Trauma Narrative</h1>
+<table>
+<thead>
+<tr>
+<th><strong>Introduction</strong></th>
+<th><strong>Context Before the Event</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Date of Writing</strong>:</td>
+<td><strong>Date of Event</strong>:</td>
+</tr>
+<tr>
+<td><strong>Current Feelings</strong>:</td>
+<td><strong>Location</strong>:</td>
+</tr>
+<tr>
+<td><strong>Intention for This Narrative</strong>:</td>
+<td><strong>People Involved</strong>:</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Life Before the Event</strong>:</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>Initial Feelings and Thoughts</strong>:</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>Detailed Account of the Event</strong></th>
+<th><strong>Aftermath</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Chronological Description</strong>:</td>
+<td><strong>Initial Response Post-Event</strong>:</td>
+</tr>
+<tr>
+<td>- Beginning:</td>
+<td><strong>Short-Term Effects</strong>:</td>
+</tr>
+<tr>
+<td>- Middle:</td>
+<td><strong>Long-Term Effects</strong>:</td>
+</tr>
+<tr>
+<td>- End:</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Sensory Details</strong>:</td>
+<td></td>
+</tr>
+<tr>
+<td>- Visual:</td>
+<td></td>
+</tr>
+<tr>
+<td>- Auditory:</td>
+<td></td>
+</tr>
+<tr>
+<td>- Olfactory (Smell):</td>
+<td></td>
+</tr>
+<tr>
+<td>- Tactile (Touch):</td>
+<td></td>
+</tr>
+<tr>
+<td>- Emotional:</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Thoughts During the Event</strong>:</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Immediate Reaction</strong>:</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>Personal Reflections</strong></th>
+<th><strong>Coping and Healing</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Emotions Felt While Recounting</strong>:</td>
+<td><strong>Coping Mechanisms Used</strong>:</td>
+</tr>
+<tr>
+<td><strong>New Insights/Perspectives Gained</strong>:</td>
+<td><strong>Support Systems</strong>:</td>
+</tr>
+<tr>
+<td><strong>Unacknowledged Aspects of Impact</strong>:</td>
+<td><strong>Personal Growth and Strengths Discovered</strong>:</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>Looking Forward</strong></th>
+<th><strong>Conclusion</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Goals for Healing and Development</strong>:</td>
+<td><strong>Summary of Insights and Growth</strong>:</td>
+</tr>
+<tr>
+<td><strong>Positive Changes to Implement</strong>:</td>
+<td><strong>Final Thoughts on Narrative Process</strong>:</td>
+</tr>
+<tr>
+<td><strong>Affirmations for the Future</strong>:</td>
+<td></td>
+</tr>
+</tbody></table>
+</div><div id="Fundamentals" class="content"></div><div id="Management" class="content"></div><div id="Social Dynamics" class="content"></div><div id="Therapeutic Approaches" class="content"></div><div id="Cognition and Management" class="content"></div><div id="Behavioral Activation" class="content"></div><div id="Building Resilience" class="content"></div><div id="Community and Support" class="content"></div><div id="Holistic Approach" class="content"></div><div id="Indicators" class="content"></div><div id="Exercises and Practice" class="content"></div></div>
+            <script>
+                document.querySelectorAll('#navbar .folder-name').forEach(element => {
+                    element.addEventListener('click', function() {
+                        this.parentElement.classList.toggle('open');
+                    });
+                });
+                document.getElementById('navbar').addEventListener('click', function(e) {
+                    if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
+                        var active = document.querySelector('.content.active');
+                        if (active) active.classList.remove('active');
+                        var contentId = e.target.getAttribute('href').substring(1);
+                        if (contentId) {
+                            var content = document.getElementById(contentId);
+                            if (content) content.classList.add('active');
+                        }
+                        e.preventDefault();
+                    }
+                });
+            </script>
+        </body>
+        </html>
