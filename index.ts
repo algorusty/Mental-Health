@@ -52,7 +52,8 @@ const generateNavbar = (filePaths: string[]): string => {
         navbar += `<li class="folder"><span class="folder-name">${folder}</span><ul class="dropdown">`;
         folderStructure[folder].forEach(file => {
             const displayName = file.replace('.md', '');
-            navbar += `<li><a href="#${path.basename(file, '.md')}">${displayName}</a></li>`;
+            const activeClass = displayName === 'README' ? ' active' : '';
+            navbar += `<li class="nav-item${activeClass}"><a href="#${path.basename(file, '.md')}">${displayName}</a></li>`;
         });
         navbar += '</ul></li>';
     });
