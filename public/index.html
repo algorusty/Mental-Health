@@ -4,8 +4,8 @@
             <title>The Mind</title>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.4.0/github-markdown.min.css" integrity="sha512-30lMQ13MJJk66BfdlnvVnKmP05V7Qt1g6sHyYigDgV8i9M2ENAsXk1U4dVvKUYB6pqb2bVhoxhZsYK08hQpS+g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
-                body { font-family: Arial, sans-serif; display: flex; }
-                #navbar { list-style-type: none; padding: 0; width: 200px; background-color: #f0f0f0; }
+                body { font-family: Arial, sans-serif; display: flex; margin: auto; background-color: #0d1117;}
+                #navbar { list-style-type: none; padding: 0; width: 200px; }
                 #navbar .folder-name { cursor: pointer; display: block; padding: 8px; }
                 #navbar .folder-name:before { content: '▸'; display: inline-block; margin-right: 5px; }
                 #navbar .dropdown { display: none; list-style-type: none; padding: 0; margin: 0; }
@@ -17,11 +17,12 @@
                 // .markdown-body { max-width: 800px; margin: 0 auto; padding: 45px; }
                 .markdown-navbar {
                     font-family: Arial, sans-serif;
-                    background-color: #f6f8fa;
-                    border-right: 1px solid #e1e4e8;
+                    background-color: #0d1117; // GitHub dark mode background color
+                    border-right: 1px solid #21262d;
                     padding: 0.5em;
                     margin: 0;
                     width: 300px;
+                    color: #c9d1d9; // GitHub dark mode text color
                 }
             
                 .markdown-navbar ul {
@@ -31,7 +32,7 @@
                 }
             
                 .markdown-navbar li a {
-                    color: #0366d6;
+                    color: #58a6ff; // GitHub dark mode link color
                     text-decoration: none;
                     padding: 0.5em;
                     display: block;
