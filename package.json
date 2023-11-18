@@ -8,12 +8,16 @@
   "type": "module",
   "scripts": {
     "build": "bun index.ts",
-    "vercel-build": "bun index.ts"
+    "vercel-build": "bun index.ts",
+    "start": "bun index.ts"
+  },
+  "engines": {
+    "bun": ">=0.1.2"
   },
   "devDependencies": {
     "bun-types": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.2.2"
   }
 }
