@@ -1,5 +1,9 @@
 # The Mind - A Comprehensive Guide to Mental Health
 
+[wesleysoto.dev](https://wesleysoto.dev/)
+[Github: algorusty](https://github.com/algorusty)
+[LinkedIn](https://www.linkedin.com/in/wesley-soto-b9a2217b/)
+
 ## Overview
 
 Welcome to "The Mind" ([themind.exposed](http://themind.exposed)), an extensive resource dedicated to exploring mental health topics. This platform provides in-depth coverage of various aspects of mental well-being, tailored for understanding and managing conditions like trauma, anxiety, and depression.

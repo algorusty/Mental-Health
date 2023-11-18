@@ -1,36 +1,59 @@
 # Trauma Narrative
 
-| **Introduction**                          | **Context Before the Event**                      |
-|-------------------------------------------|---------------------------------------------------|
-| **Date of Writing**:                      | **Date of Event**:                                |
-| **Current Feelings**:                     | **Location**:                                     |
-| **Intention for This Narrative**:         | **People Involved**:                              |
-|                                           | **Life Before the Event**:                        |
-|                                           | **Initial Feelings and Thoughts**:                |
+## Introduction
 
-| **Detailed Account of the Event**         | **Aftermath**                                     |
-|-------------------------------------------|---------------------------------------------------|
-| **Chronological Description**:            | **Initial Response Post-Event**:                  |
-|   - Beginning:                            | **Short-Term Effects**:                           |
-|   - Middle:                               | **Long-Term Effects**:                            |
-|   - End:                                  |                                                   |
-| **Sensory Details**:                      |                                                   |
-|   - Visual:                               |                                                   |
-|   - Auditory:                             |                                                   |
-|   - Olfactory (Smell):                    |                                                   |
-|   - Tactile (Touch):                      |                                                   |
-|   - Emotional:                            |                                                   |
-| **Thoughts During the Event**:            |                                                   |
-| **Immediate Reaction**:                   |                                                   |
+- **Date of Writing**:
+- **Current Feelings**:
+- **Intention for This Narrative**:
 
-| **Personal Reflections**                  | **Coping and Healing**                            |
-|-------------------------------------------|---------------------------------------------------|
-| **Emotions Felt While Recounting**:       | **Coping Mechanisms Used**:                       |
-| **New Insights/Perspectives Gained**:     | **Support Systems**:                              |
-| **Unacknowledged Aspects of Impact**:     | **Personal Growth and Strengths Discovered**:     |
+## Context Before the Event
 
-| **Looking Forward**                       | **Conclusion**                                    |
-|-------------------------------------------|---------------------------------------------------|
-| **Goals for Healing and Development**:    | **Summary of Insights and Growth**:               |
-| **Positive Changes to Implement**:        | **Final Thoughts on Narrative Process**:          |
-| **Affirmations for the Future**:          |                                                   |
+- **Date of Event**:
+- **Location**:
+- **People Involved**:
+- **What was life like before the event?**:
+- **Initial Feelings and Thoughts**:
+
+## Detailed Account of the Event
+
+- **Chronological Description**:
+  - **Beginning**:
+  - **Middle**:
+  - **End**:
+- **Sensory Details**:
+  - **Visual**:
+  - **Auditory**:
+  - **Olfactory (Smell)**:
+  - **Tactile (Touch)**:
+  - **Emotional**:
+- **Thoughts During the Event**:
+- **Immediate Reaction**:
+
+## Aftermath
+
+- **Initial Response Post-Event**:
+- **Short-Term Effects (Days and Weeks After)**:
+- **Long-Term Effects (Months and Years After)**:
+
+## Personal Reflections
+
+- **Emotions Felt While Recounting**:
+- **New Insights or Perspectives Gained**:
+- **Aspects of the Event and Its Impact Previously Unacknowledged**:
+
+## Coping and Healing
+
+- **Coping Mechanisms Used**:
+- **Support Systems (People, Activities, Therapies)**:
+- **Personal Growth and Strengths Discovered**:
+
+## Looking Forward
+
+- **Goals for Healing and Personal Development**:
+- **Positive Changes to Implement**:
+- **Affirmations or Positive Statements for the Future**:
+
+## Conclusion
+
+- **Summary of Insights and Growth**:
+- **Final Thoughts and Feelings About the Narrative Process**:
